@@ -25,16 +25,11 @@ public class LoginService {
        Optional<User> user = userRepository.findByEmail(loginDTO.getEmail());
        if(user.isEmpty()){
            throw new NotAuthorizedException("Erro ao efetuar a autenticação");
-
        }
-
-
-
         String token = generateToken.generateTokenJWT(user.get());
 
        loginResponseDTO.setEmail(user.get().getEmail());
        loginResponseDTO.setToken(token);
-
 
        return loginResponseDTO;
     }
