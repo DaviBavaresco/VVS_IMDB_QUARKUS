@@ -8,7 +8,6 @@ import br.com.mp.quarkusmovie.util.GenerateToken;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotAuthorizedException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.Optional;
 @ApplicationScoped

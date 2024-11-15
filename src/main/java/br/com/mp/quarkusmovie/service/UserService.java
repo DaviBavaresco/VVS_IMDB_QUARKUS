@@ -7,7 +7,6 @@ import br.com.mp.quarkusmovie.repository.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.BadRequestException;
 
 import java.util.Optional;
 
@@ -21,9 +20,16 @@ public class UserService {
 
         Optional<User> userOptional = userRepository.findByEmail(userDTO.getEmail());
 
-
         if(userOptional.isPresent() ){
             throw new BusinessException("Usuario já cadastrado com este email");
+        }
+
+        if(userDTO.getName().isEmpty() ){
+            throw new BusinessException("Usuario precisa possuir um nome");
+        }
+
+        if(userDTO.getPassword().isEmpty() ){
+            throw new BusinessException("Usuario precisa possuir uma senha");
         }
 
 

@@ -2,8 +2,6 @@
 package br.com.mp.quarkusmovie.restclient.model;
 
 
-
-
 public class ImageIMDB {
 
 

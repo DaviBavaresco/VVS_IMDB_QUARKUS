@@ -1,11 +1,12 @@
 package br.com.mp.quarkusmovie.model;
 
 import br.com.mp.quarkusmovie.restclient.model.DescriptionIMDB;
-import br.com.mp.quarkusmovie.restclient.model.MovieIMDB;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+
 
 @Entity
 @Table(name="movie")
@@ -30,6 +31,9 @@ public class Movie implements Serializable {
     private Long year;
 
     public Movie() {
+    /*
+     * Construtor vazio por causa do banco de dados que estamos usando
+     */
     }
 
     public Movie(DescriptionIMDB descriptionIMDB) {
@@ -118,4 +122,5 @@ public class Movie implements Serializable {
     public void setYear(Long year) {
         this.year = year;
     }
+
 }

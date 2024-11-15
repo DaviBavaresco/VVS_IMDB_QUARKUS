@@ -89,7 +89,17 @@ public class MovieService {
             throw new BusinessException("Erro: para dar uma avaliação é nescessario assistir o filme");
         }
 
+        if(userMovieModelAPI.getRate() == null){
+            throw new BusinessException("Erro: para dar uma avaliação é nescessario inserir o rate");
+        }
+
         Movie movie = movieRepository.findyIMDBID(userMovieModelAPI.getMovieIMDBId());
+
+        if(movieRepository.findyIMDBID(userMovieModelAPI.getMovieIMDBId()) == null){
+            throw new BusinessException("Erro: Nenhum filme encontrado com este codigo");
+        }
+
+
 
         UserMoviePK userMoviePK =  new UserMoviePK();
         userMoviePK.setUserId(user.get().getId());
