@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-public class LoginResourceTest {
+class LoginResourceTest {
 
     final LoginDTO loginDTO = new LoginDTO();
 
     String token = "";
-
+    
     @BeforeEach
     public void setUp(){
         loginDTO.setEmail("davi@");
@@ -24,7 +24,7 @@ public class LoginResourceTest {
 
     @Test
     @DisplayName("Login user")
-    public void login(){
+    void login(){
         given()
                 .contentType(ContentType.JSON)
                 .body(loginDTO)
@@ -35,13 +35,13 @@ public class LoginResourceTest {
 
     @Test
     @DisplayName("Login with wrong email")
-    public void loginError(){
-        LoginDTO test_wrong_Email = new LoginDTO();
-        test_wrong_Email.setEmail("aa");
-        test_wrong_Email.setPassword("davi123");
+     void loginError(){
+        LoginDTO testWrongEmail = new LoginDTO();
+        testWrongEmail.setEmail("aa");
+        testWrongEmail.setPassword("davi123");
         given()
                 .contentType(ContentType.JSON)
-                .body(test_wrong_Email)
+                .body(testWrongEmail)
                 .when().post("/login")
                 .then()
                 .statusCode(400);
@@ -49,7 +49,7 @@ public class LoginResourceTest {
 
     @Test
     @DisplayName("Login to get the token")
-    public void loginToken(){
+    void loginToken(){
         token = given()
                 .contentType(ContentType.JSON)
                 .body(loginDTO)

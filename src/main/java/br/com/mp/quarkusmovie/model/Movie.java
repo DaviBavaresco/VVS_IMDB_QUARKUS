@@ -36,6 +36,9 @@ public class Movie implements Serializable {
      */
     }
 
+    public void naoFazNada(){
+    }
+
     public Movie(DescriptionIMDB descriptionIMDB) {
         this.name = descriptionIMDB.getLongName();
         this.imdbId = descriptionIMDB.getIdIMDB();
@@ -122,5 +125,8 @@ public class Movie implements Serializable {
     public void setYear(Long year) {
         this.year = year;
     }
+
+
+
 
 }

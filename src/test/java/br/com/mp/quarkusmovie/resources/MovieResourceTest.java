@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
 
 @QuarkusTest
-public class MovieResourceTest {
+ class MovieResourceTest {
 
     @Inject
     LoginResourceTest loginResourceTest;
@@ -44,7 +44,7 @@ public class MovieResourceTest {
 
     @Test
     @DisplayName("Load list movies")
-    public void loadListMoviesTest() {
+     void loadListMoviesTest() {
         given()
           .when().get("/movies/list")
           .then()
@@ -53,7 +53,7 @@ public class MovieResourceTest {
 
     @Test
     @DisplayName("List best rated movies")
-    public void ListBestRatedTest(){
+     void ListBestRatedTest(){
         given()
                 .when()
                 .get("/movies/listBestRated")
@@ -63,7 +63,7 @@ public class MovieResourceTest {
 
     @Test
     @DisplayName("Rating/Evaluate movie")
-    public void evaluate(){
+     void evaluate(){
         UserMovieModelAPI userMovieModelAPI = new UserMovieModelAPI();
         userMovieModelAPI.setMovieIMDBId("tt8878862");
         userMovieModelAPI.setRate(4);
@@ -82,7 +82,7 @@ public class MovieResourceTest {
 
     @Test
     @DisplayName("Rating/Evaluate without token")
-    public void evaluateWithoutToken(){
+     void evaluateWithoutToken(){
         UserMovieModelAPI userMovieModelAPI = new UserMovieModelAPI();
         userMovieModelAPI.setMovieIMDBId("tt8878862");
         userMovieModelAPI.setRate(4);
@@ -96,5 +96,60 @@ public class MovieResourceTest {
                 .then()
                 .statusCode(401);
     }
+
+    @Test
+    @DisplayName("Rating/Evaluate movie watched = false")
+     void evaluateWatchedFalse(){
+        UserMovieModelAPI userMovieModelAPI = new UserMovieModelAPI();
+        userMovieModelAPI.setMovieIMDBId("tt8878862");
+        userMovieModelAPI.setRate(4);
+        userMovieModelAPI.setAreadyWatched(false);
+        userMovieModelAPI.setWatchList(true);
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .body(userMovieModelAPI)
+                .contentType(ContentType.JSON)
+                .post("/movies/evaluate")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Rating/Evaluate movie without rate")
+     void evaluateWithoutRate(){
+        UserMovieModelAPI userMovieModelAPI = new UserMovieModelAPI();
+        userMovieModelAPI.setMovieIMDBId("tt8878862");
+        userMovieModelAPI.setAreadyWatched(false);
+        userMovieModelAPI.setWatchList(true);
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .body(userMovieModelAPI)
+                .contentType(ContentType.JSON)
+                .post("/movies/evaluate")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @DisplayName("Rating/Evaluate movie with wronge IMDB")
+     void evaluateWithWrongeIMDB(){
+        UserMovieModelAPI userMovieModelAPI = new UserMovieModelAPI();
+        userMovieModelAPI.setMovieIMDBId("tt88862");
+        userMovieModelAPI.setAreadyWatched(true);
+        userMovieModelAPI.setWatchList(true);
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .body(userMovieModelAPI)
+                .contentType(ContentType.JSON)
+                .post("/movies/evaluate")
+                .then()
+                .statusCode(400);
+    }
+
+
+    
 
 }
